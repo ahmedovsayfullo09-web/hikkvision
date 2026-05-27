@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html class="light" lang="uz">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>HIKVISION CATALOG</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+// --- SOZLAMALAR ---
+const OWNER_USERNAME = "hikvision_23"; // Telegram useringiz (xabar keladigan joy)
+const DEFAULT_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' rx='40' fill='%23C8161D'/%3E%3Ctext x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-weight='900' font-size='80' fill='white' letter-spacing='-2'%3EHIK%3C/text%3E%3Ctext x='50%25' y='75%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-weight='bold' font-size='40' fill='white' letter-spacing='4'%3EVISION%3C/text%3E%3C/svg%3E";
+
+// --- TILLAR (Dictionary) ---
+const i18n = {
+    uz: {
+        splash_btn: "Katalogga Kirish",
+        shop_title: "Barcha Mahsulotlar",
+        shop_desc: "Xavfsizlik uchun zamonaviy yechimlar",
+        cat_cam: "IP Kameralar",
+        cat_dvr: "Video Registratorlar",
+        cat_acc: "Aksessuarlar",
+        cat_all: "Barchasini Ko'rish",
+        bag_title: "Savatcha",
+        bag_empty: "Savatingiz bo'sh",
+        total: "Jami:",
+        buy_btn: "Telegram orqali Buyurtma Berish",
+        clear_bag: "Savatchani tozalash",
+        add_prod: "Yangi Mahsulot Qo'shish",
+        save: "Saqlash",
+        cancel: "Bekor qilish",
+        settings: "Sozlamalar",
+        dark_mode: "Qorong'u rejim",
+        currency: "Valyuta",
+        lang: "Til",
+        del_data: "Barcha Ma'lumotlarni O'chirish",
+        edit_prof: "Ma'lumotlarni Tahrirlash",
+        change_logo: "Logotipni O'zgartirish",
+        store_name: "Do'kon Nomi",
+        admin_name: "Sizning Ismingiz",
+        prod_name: "Mahsulot Nomi",
+        prod_price: "Narxi (so'm)",
+        prod_cat: "Kategoriya",
+        prod_desc: "Xarakteristikasi va Tavsifi",
+        upload_img: "Rasmni tanlang",
+        specs: "Xarakteristika",
+        to_cart: "Savatga Qo'shish",
+        added: "Savatga qo'shildi!",
+        saved: "Saqlandi!",
+        cleared: "Tozalandi!",
+        confirm_del: "Haqiqatan ham o'chirmoqchimisiz?",
+        cam_count: "ta kamera",
+        rec_count: "ta registratior",
+        acc_count: "ta aksessuar"
+    },
+    ru: {
+        splash_btn: "Войти в каталог",
+        shop_title: "Все товары",
+        shop_desc: "Современные решения для безопасности",
+        cat_cam: "IP Камеры",
+        cat_dvr: "Видеорегистраторы",
+        cat_acc: "Аксессуары",
+        cat_all: "Смотреть все",
+        bag_title: "Корзина",
+        bag_empty: "Ваша корзина пуста",
+        total: "Итого:",
+        buy_btn: "Заказать через Telegram",
+        clear_bag: "Очистить корзину",
+        add_prod: "Добавить товар",
+        save: "Сохранить",
+        cancel: "Отмена",
+        settings: "Настройки",
+        dark_mode: "Темный режим",
+        currency: "Валюта",
+        lang: "Язык",
+        del_data: "Удалить все данные",
+        edit_prof: "Редактировать профиль",
+        change_logo: "Изменить логотип",
+        store_name: "Название магазина",
+        admin_name: "Ваше имя",
+        prod_name: "Название товара",
+        prod_price: "Цена (сум)",
+        prod_cat: "Категория",
+        prod_desc: "Характеристики и описание",
+        upload_img: "Выберите фото",
+        specs: "Характеристики",
+        to_cart: "В корзину",
+        added: "Добавлено в корзину!",
+        saved: "Сохранено!",
+        cleared: "Очищено!",
+        confirm_del: "Вы уверены, что хотите удалить?",
+        cam_count: "камер",
+        rec_count: "регистраторов",
+        acc_count: "аксессуаров"
+    },
+    en: {
+        splash_btn: "Enter Catalog",
+        shop_title: "All Products",
+        shop_desc: "Modern solutions for security",
+        cat_cam: "IP Cameras",
+        cat_dvr: "Video Recorders",
+        cat_acc: "Accessories",
+        cat_all: "View All",
+        bag_title: "Cart",
+        bag_empty: "Your cart is empty",
+        total: "Total:",
+        buy_btn: "Order via Telegram",
+        clear_bag: "Clear Cart",
+        add_prod: "Add New Product",
+        save: "Save",
+        cancel: "Cancel",
+        settings: "Settings",
+        dark_mode: "Dark Mode",
+        currency: "Currency",
+        lang: "Language",
+        del_data: "Delete All Data",
+        edit_prof: "Edit Profile",
+        change_logo: "Change Logo",
+        store_name: "Store Name",
+        admin_name: "Your Name",
+        prod_name: "Product Name",
+        prod_price: "Price (UZS)",
+        prod_cat: "Category",
+        prod_desc: "Specifications & Description",
+        upload_img: "Select Image",
+        specs: "Specifications",
+        to_cart: "Add to Cart",
+        added: "Added to cart!",
+        saved: "Saved!",
+        cleared: "Cleared!",
+        confirm_del: "Are you sure you want to delete?",
+        cam_count: "cameras",
+        rec_count: "recorders",
+        acc_count: "accessories"
+    }
+};
+
+// --- TAILWIND CONFIG ---
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#C8161D", // Hikvision Red
+                "on-primary": "#FFFFFF",
+                "primary-container": "#FFEBEE",
+                "surface": "#F8F9FA",
+                "on-surface": "#121212",
+                "surface-container": "#ECEFF1",
+                "outline-variant": "#CFD8DC",
+                "error": "#BA1A1A",
+                "inverse-surface": "#2E3C42",
+                "inverse-on-surface": "#EFF3F5"
+            },
+            fontFamily: { "headline": ["Epilogue"], "body": ["Inter"] },
+            spacing: { "gutter": "20px" }
+        }
+    }
+}
+</script>
+<style>
+    body { background-color: #F8F9FA; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; color: #121212; font-family: 'Inter', sans-serif; }
+    .dark body, body.dark-mode { background-color: #121212; color: #E0E0E0; }
+    .dark .bg-white { background-color: #1E1E1E !important; }
+    .dark .bg-gray-100 { background-color: #2C2C2C !important; }
+    .dark .border-gray-100, .dark .border-gray-200 { border-color: #333 !important; }
+    .dark .text-gray-500, .dark .text-gray-400 { color: #999 !important; }
+    .dark .text-primary { color: #FF5252 !important; }
+    
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; user-select: none; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Splash Screen Animation */
+    #splash-screen { transition: opacity 0.8s ease, visibility 0.8s ease; }
+    #splash-screen.hidden-splash { opacity: 0; visibility: hidden; pointer-events: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .splash-anim { animation: fadeIn 1s ease-out forwards; }
+    
+    /* Pages & Modals */
+    .page { display: none; } .page.active { display: block; animation: fadeIn 0.3s ease; }
+    .modal-overlay { transition: opacity 0.3s; pointer-events: none; opacity: 0; }
+    .modal-overlay.show { pointer-events: all; opacity: 1; }
+    .modal-content { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(100%); }
+    .modal-overlay.show .modal-content { transform: translateY(0); }
+    
+    /* UI Elements */
+    .toast { transition: all 0.3s; transform: translateY(-20px); opacity: 0; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .card-hover { transition: transform 0.2s; } .card-hover:active { transform: scale(0.97); }
+    input, select, textarea { background-color: inherit; color: inherit; }
+    
+    /* Custom File Upload */
+    .file-upload-label { border: 2px dashed #cbd5e1; transition: all 0.2s; }
+    .file-upload-label:hover { border-color: #C8161D; background-color: #FFF5F5; }
+    .dark .file-upload-label:hover { border-color: #FF5252; background-color: #3D1A1A; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN (HIKVISION BRANDED) -->
+<div id="splash-screen" class="fixed inset-0 z-[100] bg-[#C8161D] flex flex-col items-center justify-center px-6 text-center text-white">
+    <!-- Hikvision Style SVG Logo -->
+    <div class="splash-anim mb-8 scale-150">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 0L160 30V80C160 125 130 165 100 180C70 165 40 125 40 80V30L100 0Z" fill="white" fill-opacity="0.2"/>
+            <path d="M100 20L145 42V78C145 112 123 143 100 155C77 143 55 112 55 78V42L100 20Z" fill="white"/>
+            <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="40" fill="#C8161D">HIK</text>
+            <text x="50%" y="85%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#C8161D" letter-spacing="3">VISION</text>
+        </svg>
+    </div>
+    <h1 class="splash-anim font-headline text-4xl font-bold tracking-tighter opacity-90">HIKVISION CATALOG</h1>
+    <p class="splash-anim text-white/70 mt-2 text-sm font-medium" data-i18n="shop_desc">Xavfsizlik uchun zamonaviy yechimlar</p>
+    
+    <button onclick="enterApp()" class="splash-anim mt-12 bg-white text-[#C8161D] font-bold py-4 px-12 rounded-full shadow-2xl active:scale-95 transition-transform flex items-center gap-2 text-lg">
+        <span data-i18n="splash_btn">Katalogga Kirish</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+    
+    <!-- Language Selector on Splash -->
+    <div class="splash-anim absolute bottom-10 flex gap-4 bg-white/10 backdrop-blur-md p-2 rounded-full border border-white/20">
+        <button onclick="setLang('uz')" class="px-3 py-1 rounded-full text-sm font-bold hover:bg-white hover:text-red-600 transition">UZ</button>
+        <button onclick="setLang('ru')" class="px-3 py-1 rounded-full text-sm font-bold hover:bg-white hover:text-red-600 transition">RU</button>
+        <button onclick="setLang('en')" class="px-3 py-1 rounded-full text-sm font-bold hover:bg-white hover:text-red-600 transition">EN</button>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast fixed top-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-2xl shadow-2xl font-medium z-[90] flex items-center gap-2">
+    <span class="material-symbols-outlined text-green-400">check_circle</span>
+    <span id="toast-msg">Success</span>
+</div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-b border-gray-200 dark:border-gray-700 flex justify-between items-center px-gutter h-16">
+    <div class="flex items-center gap-3">
+        <img id="header-logo" src="" alt="Logo" class="w-10 h-10 object-contain rounded-lg">
+        <div class="flex flex-col">
+            <h1 class="font-headline text-base font-bold tracking-wider text-primary leading-none" id="header-brand">Hikvision Store</h1>
+            <span class="text-[10px] text-gray-500 font-semibold tracking-wide" id="header-admin">Admin</span>
+        </div>
+    </div>
+    <div class="flex items-center gap-3">
+        <button onclick="openModal('modal-lang')" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-xs font-bold border border-gray-200 dark:border-gray-700">
+            <span id="current-lang-code">UZ</span>
+        </button>
+        <button onclick="navigate('bag')" class="relative active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-primary dark:text-white text-2xl">shopping_bag</span>
+            <span id="header-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
+        </button>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="pt-16 pb-20 min-h-screen">
+    <!-- SHOP PAGE -->
+    <div id="page-shop" class="page active px-gutter pt-8 pb-8">
+        <h2 class="font-headline text-2xl font-bold mb-1 dark:text-white" data-i18n="shop_title">Barcha Mahsulotlar</h2>
+        <p class="text-gray-500 text-sm mb-6" data-i18n="shop_desc">Xavfsizlik uchun zamonaviy yechimlar</p>
+        
+        <!-- Categories Pills -->
+        <div class="flex gap-3 overflow-x-auto hide-scrollbar mb-6 pb-2">
+            <button onclick="filterByCategory('ALL')" class="cat-pill px-4 py-2 rounded-full bg-primary text-white text-sm font-semibold whitespace-nowrap" data-filter="ALL" data-i18n="cat_all">Barchasi</button>
+            <button onclick="filterByCategory('CAM')" class="cat-pill px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap" data-filter="CAM" data-i18n="cat_cam">Kameralar</button>
+            <button onclick="filterByCategory('DVR')" class="cat-pill px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap" data-filter="DVR" data-i18n="cat_dvr">DVR</button>
+            <button onclick="filterByCategory('ACC')" class="cat-pill px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap" data-filter="ACC" data-i18n="cat_acc">Aksessuarlar</button>
+        </div>
+
+        <div id="catalog-grid" class="grid grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- BAG PAGE -->
+    <div id="page-bag" class="page px-gutter pt-8">
+        <h2 class="font-headline text-2xl font-bold mb-6 dark:text-white" data-i18n="bag_title">Savatcha</h2>
+        <div id="cart-list" class="space-y-4 pb-48"></div>
+        <div id="cart-empty" class="hidden flex flex-col items-center justify-center py-20 text-center">
+            <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">shopping_cart_off</span>
+            <p class="text-gray-500 font-medium" data-i18n="bag_empty">Savatingiz bo'sh</p>
+        </div>
+    </div>
+
+    <!-- EXPLORE / CATEGORIES PAGE -->
+    <div id="page-explore" class="page px-gutter pt-8">
+        <h2 class="font-headline text-2xl font-bold mb-6 dark:text-white" data-i18n="cat_all">Kategoriyalar</h2>
+        <div class="space-y-4">
+            <div onclick="filterByCategory('CAM')" class="h-32 bg-gradient-to-r from-red-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl flex items-center p-6 cursor-pointer card-hover shadow-sm border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+                <div class="z-10"><h3 class="font-headline text-xl font-bold text-primary dark:text-red-400" data-i18n="cat_cam">IP Kameralar</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="cat-cam-count">0 ta</p></div>
+                <span class="material-symbols-outlined absolute right-4 bottom-[-10px] text-8xl opacity-10 text-primary dark:text-white">videocam</span>
+            </div>
+            <div onclick="filterByCategory('DVR')" class="h-32 bg-gradient-to-r from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl flex items-center p-6 cursor-pointer card-hover shadow-sm border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+                <div class="z-10"><h3 class="font-headline text-xl font-bold text-primary dark:text-blue-400" data-i18n="cat_dvr">Registratorlar</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="cat-dvr-count">0 ta</p></div>
+                <span class="material-symbols-outlined absolute right-4 bottom-[-10px] text-8xl opacity-10 text-primary dark:text-white">dns</span>
+            </div>
+            <div onclick="filterByCategory('ACC')" class="h-32 bg-gradient-to-r from-green-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl flex items-center p-6 cursor-pointer card-hover shadow-sm border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+                <div class="z-10"><h3 class="font-headline text-xl font-bold text-primary dark:text-green-400" data-i18n="cat_acc">Aksessuarlar</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="cat-acc-count">0 ta</p></div>
+                <span class="material-symbols-outlined absolute right-4 bottom-[-10px] text-8xl opacity-10 text-primary dark:text-white">cable</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div id="page-profile" class="page px-gutter pt-8">
+        <div class="flex items-center gap-4 mb-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer" onclick="openModal('modal-edit-profile')">
+            <div class="w-16 h-16 rounded-2xl bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                <span class="material-symbols-outlined text-4xl text-gray-400 dark:text-gray-300">storefront</span>
+            </div>
+            <div class="flex-1">
+                <h2 class="font-headline text-lg font-bold dark:text-white" id="profile-store-name">Hikvision Store</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400" id="profile-admin-name">Admin</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary dark:text-white">edit</span>
+            </div>
+        </div>
+
+        <button onclick="openModal('modal-logo')" class="w-full mb-4 border-2 border-dashed border-primary text-primary dark:text-red-400 font-bold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+            <span class="material-symbols-outlined">badge</span>
+            <span data-i18n="change_logo">Logotipni O'zgartirish</span>
+        </button>
+
+        <button onclick="openModal('modal-add-product')" class="w-full mb-6 bg-primary dark:bg-red-600 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg shadow-red-200 dark:shadow-none">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span data-i18n="add_prod">Yangi Mahsulot Qo'shish</span>
+        </button>
+
+        <div class="space-y-3">
+            <div onclick="openModal('modal-settings')" class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer">
+                <div class="flex items-center gap-4"><span class="material-symbols-outlined text-gray-600 dark:text-gray-300">settings</span><span class="font-medium dark:text-white" data-i18n="settings">Sozlamalar</span></div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </div>
+            <button onclick="clearAllData()" class="w-full mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-error rounded-2xl font-semibold flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">delete_forever</span>
+                <span data-i18n="del_data">Barcha Ma'lumotlarni O'chirish</span>
+            </button>
+        </div>
+    </div>
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200 dark:border-gray-700 flex justify-around items-center h-16 pb-1">
+    <button onclick="navigate('shop')" class="nav-btn flex flex-col items-center justify-center pt-2 text-primary dark:text-red-500 border-t-2 border-primary dark:border-red-500" data-page="shop">
+        <span class="material-symbols-outlined">storefront</span><span class="text-[10px] font-semibold mt-1">Shop</span>
+    </button>
+    <button onclick="navigate('explore')" class="nav-btn flex flex-col items-center justify-center pt-2 text-gray-400 border-t-2 border-transparent" data-page="explore">
+        <span class="material-symbols-outlined">grid_view</span><span class="text-[10px] font-semibold mt-1">Explore</span>
+    </button>
+    <button onclick="navigate('bag')" class="nav-btn flex flex-col items-center justify-center pt-2 text-gray-400 border-t-2 border-transparent relative" data-page="bag">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span id="nav-badge" class="hidden absolute top-0 right-1/4 w-4 h-4 bg-red-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center">0</span>
+        <span class="text-[10px] font-semibold mt-1">Bag</span>
+    </button>
+    <button onclick="navigate('profile')" class="nav-btn flex flex-col items-center justify-center pt-2 text-gray-400 border-t-2 border-transparent" data-page="profile">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[10px] font-semibold mt-1">Profile</span>
+    </button>
+</nav>
+
+<!-- MODALS -->
+
+<!-- Language Modal -->
+<div class="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-lang">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl p-6">
+        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-headline text-xl font-bold mb-6 dark:text-white" data-i18n="lang">Tilni Tanlang</h3>
+        <div class="space-y-3">
+            <button onclick="setLang('uz'); closeModal('modal-lang')" class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                <span class="font-bold text-lg dark:text-white">🇺🇿 O'zbek tili</span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+            <button onclick="setLang('ru'); closeModal('modal-lang')" class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                <span class="font-bold text-lg dark:text-white">🇷🇺 Русский язык</span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+            <button onclick="setLang('en'); closeModal('modal-lang')" class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                <span class="font-bold text-lg dark:text-white">🇬🇧 English</span>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+            </button>
+        </div>
+        <button onclick="closeModal('modal-lang')" class="absolute top-6 right-6"><span class="material-symbols-outlined text-gray-400">close</span></button>
+    </div>
+</div>
+
+<!-- Edit Profile -->
+<div class="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-edit-profile">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl p-6">
+        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-headline text-xl font-bold mb-6 dark:text-white" data-i18n="edit_prof">Ma'lumotlarni Tahrirlash</h3>
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase block mb-1" data-i18n="store_name">Do'kon Nomi</label>
+                <input type="text" id="inp-store-name" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white" placeholder="Masalan: Hikvision UZ"/>
+            </div>
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase block mb-1" data-i18n="admin_name">Sizning Ismingiz</label>
+                <input type="text" id="inp-admin-name" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white" placeholder="Masalan: Aziz"/>
+            </div>
+            <button onclick="saveProfile()" class="w-full bg-primary dark:bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform" data-i18n="save">Saqlash</button>
+        </div>
+        <button onclick="closeModal('modal-edit-profile')" class="absolute top-6 right-6"><span class="material-symbols-outlined text-gray-400">close</span></button>
+    </div>
+</div>
+
+<!-- Change Logo -->
+<div class="fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-logo">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl p-6">
+        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-headline text-xl font-bold mb-6 dark:text-white" data-i18n="change_logo">Logotipni O'zgartirish</h3>
+        <input type="file" accept="image/*" id="logo-file-btn" class="hidden" onchange="handleLogoUpload(event)">
+        <label for="logo-file-btn" class="file-upload-label flex flex-col items-center justify-center w-full h-48 rounded-2xl cursor-pointer bg-gray-50 dark:bg-gray-800 text-center mb-4">
+            <div id="logo-preview-container" class="hidden w-full h-full relative p-4">
+                <img id="logo-preview" src="" class="w-full h-full object-contain">
+                <div onclick="removeLogo(event)" class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow cursor-pointer"><span class="material-symbols-outlined text-lg">close</span></div>
+            </div>
+            <div id="logo-upload-placeholder" class="flex flex-col items-center py-8">
+                <span class="material-symbols-outlined text-5xl text-gray-400 mb-2">badge</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400 font-medium" data-i18n="upload_img">Yangi logotipni tanlang</span>
+            </div>
+        </label>
+        <button onclick="saveLogo()" class="w-full bg-primary dark:bg-red-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform" data-i18n="save">Saqlash</button>
+        <button onclick="closeModal('modal-logo')" class="absolute top-6 right-6"><span class="material-symbols-outlined text-gray-400">close</span></button>
+    </div>
+</div>
+
+<!-- View Product -->
+<div class="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-product">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl max-h-[90vh] overflow-y-auto hide-scrollbar">
+        <div class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-4 flex justify-between items-center border-b border-gray-100 dark:border-gray-800 z-10">
+            <h3 class="font-headline font-bold text-lg dark:text-white" id="modal-product-title">Mahsulot</h3>
+            <button onclick="closeModal('modal-product')" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"><span class="material-symbols-outlined text-sm dark:text-white">close</span></button>
+        </div>
+        <div class="p-6">
+            <div class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden mb-6"><img id="modal-product-img" src="" class="w-full h-full object-cover"/></div>
+            <div class="flex justify-between items-start mb-2">
+                <div><h2 class="font-headline text-2xl font-bold dark:text-white" id="modal-product-name">Nomi</h2><p class="text-sm text-primary font-bold mt-1" id="modal-product-cat">Kategoriya</p></div>
+                <p class="font-headline text-2xl font-bold text-primary dark:text-red-400" id="modal-product-price">0 UZS</p>
+            </div>
+            
+            <!-- Specs Section -->
+            <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2" data-i18n="specs">Xarakteristika</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-wrap" id="modal-product-desc">Tavsif...</p>
+            </div>
+
+            <button onclick="addToCart()" class="w-full bg-primary dark:bg-red-600 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg mt-6">
+                <span class="material-symbols-outlined">add_shopping_cart</span> <span data-i18n="to_cart">Savatga Qo'shish</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Product -->
+<div class="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-add-product">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl p-6 max-h-[90vh] overflow-y-auto hide-scrollbar">
+        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-headline text-xl font-bold mb-6 dark:text-white" data-i18n="add_prod">Yangi Mahsulot</h3>
+        
+        <div class="mb-4">
+            <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase block mb-2" data-i18n="upload_img">Mahsulot Rasmi</label>
+            <input type="file" accept="image/*" id="real-file-btn" class="hidden" onchange="handleImageUpload(event)">
+            <label for="real-file-btn" class="file-upload-label flex flex-col items-center justify-center w-full h-40 rounded-2xl cursor-pointer bg-gray-50 dark:bg-gray-800 text-center">
+                <div id="img-preview-container" class="hidden w-full h-full relative">
+                    <img id="img-preview" src="" class="w-full h-full object-cover rounded-2xl">
+                    <div onclick="removeProductImage(event)" class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow cursor-pointer"><span class="material-symbols-outlined text-lg">close</span></div>
+                </div>
+                <div id="img-upload-placeholder" class="flex flex-col items-center py-8">
+                    <span class="material-symbols-outlined text-5xl text-gray-400 mb-2">add_photo_alternate</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400 font-medium" data-i18n="upload_img">Rasmni tanlang</span>
+                </div>
+            </label>
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase" data-i18n="prod_name">Nomi</label>
+                <input type="text" id="inp-name" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white" placeholder="Masalan: Hikvision Dome 5MP"/>
+            </div>
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase" data-i18n="prod_price">Narxi (so'm)</label>
+                <input type="number" id="inp-price" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white" placeholder="1500000"/>
+            </div>
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase" data-i18n="prod_cat">Kategoriya</label>
+                <select id="inp-cat" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white">
+                    <option value="CAM">IP Kamera</option>
+                    <option value="DVR">Registratior (DVR/NVR)</option>
+                    <option value="ACC">Aksessuar</option>
+                </select>
+            </div>
+            <div>
+                <label class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase" data-i18n="prod_desc">Xarakteristikasi</label>
+                <textarea id="inp-desc" rows="4" class="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 mt-1 focus:ring-2 focus:ring-primary outline-none dark:bg-gray-800 dark:text-white text-sm" placeholder="4MP, IR 30m, IP67, PoE..."></textarea>
+            </div>
+            <button onclick="addNewProduct()" class="w-full bg-primary dark:bg-red-600 text-white font-bold py-4 rounded-xl mt-2" data-i18n="save">Saqlash</button>
+        </div>
+        <button onclick="closeModal('modal-add-product')" class="absolute top-6 right-6"><span class="material-symbols-outlined text-gray-400">close</span></button>
+    </div>
+</div>
+
+<!-- Settings -->
+<div class="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm modal-overlay" id="modal-settings">
+    <div class="modal-content absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl p-6">
+        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6"></div>
+        <h3 class="font-headline text-xl font-bold mb-6 dark:text-white" data-i18n="settings">Sozlamalar</h3>
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3"><span class="material-symbols-outlined text-gray-600 dark:text-gray-300">dark_mode</span><span class="font-medium dark:text-white" data-i18n="dark_mode">Qorong'u rejim</span></div>
+                <button onclick="toggleDarkMode()" id="btn-dark" class="w-14 h-8 bg-gray-300 rounded-full relative transition-colors">
+                    <div id="dark-circle" class="w-6 h-6 bg-white rounded-full absolute top-1 left-1 transition-all shadow"></div>
+                </button>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3"><span class="material-symbols-outlined text-gray-600 dark:text-gray-300">paid</span><span class="font-medium dark:text-white" data-i18n="currency">Valyuta</span></div>
+                <select onchange="changeCurrency(this.value)" id="sel-curr" class="bg-gray-100 dark:bg-gray-800 border-0 rounded-lg px-3 py-2 text-sm font-medium outline-none text-gray-800 dark:text-white">
+                    <option value="UZS">UZS (So'm)</option>
+                    <option value="USD">USD ($)</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="closeModal('modal-settings')" class="absolute top-6 right-6"><span class="material-symbols-outlined text-gray-400">close</span></button>
+    </div>
+</div>
+
+<script>
+    // --- INITIAL DATA & STATE ---
+    let state = {
+        products: [
+            { 
+                id: 1, 
+                name: "Hikvision Dome Camera 4MP", 
+                price: 850000, 
+                cat: "CAM", 
+                img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1000&auto=format&fit=crop", 
+                desc: "4MP Resolution\nIR Distance: 30m\nLens: 2.8mm / 4mm\nIP67 Weatherproof\nPoE Support" 
+            },
+            { 
+                id: 2, 
+                name: "Hikvision NVR 8CH", 
+                price: 2100000, 
+                cat: "DVR", 
+                img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=1000&auto=format&fit=crop", 
+                desc: "8 Channel Input\nSupports 4K Recording\nH.265+ Compression\n2 SATA Ports (Up to 10TB each)" 
+            },
+            { 
+                id: 3, 
+                name: "IP Bullet Camera 5MP", 
+                price: 1200000, 
+                cat: "CAM", 
+                img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=1000&auto=format&fit=crop", 
+                desc: "5MP Ultra HD\nIR Distance: 50m\nWaterproof IP66\nSmart Analytics (Line crossing, intrusion)" 
+            },
+            { 
+                id: 4, 
+                name: "PoE Switch 4 Port", 
+                price: 450000, 
+                cat: "ACC", 
+                img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?q=80&w=1000&auto=format&fit=crop", 
+                desc: "4 PoE Ports + 1 Uplink\n100Mbps Transfer Rate\nPlug & Play\nDesktop or Rack Mount" 
+            }
+        ],
+        cart: [],
+        settings: { darkMode: false, currency: 'UZS', lang: 'uz' },
+        profile: { storeName: "Hikvision Store", adminName: "Admin" },
+        customLogo: null,
+        currentFilter: 'ALL',
+        currentViewProduct: null
+    };
+
+    let tempProductImg = null;
+    let tempLogoImg = null;
+
+    // Load from LocalStorage
+    try {
+        if(localStorage.getItem('hik_state')) {
+            const saved = JSON.parse(localStorage.getItem('hik_state'));
+            state = { ...state, ...saved };
+            // Ensure structure validity if version changed
+            if(!state.settings.lang) state.settings.lang = 'uz'; 
+        }
+    } catch(e) {}
+
+    function saveState() {
+        try { localStorage.setItem('hik_state', JSON.stringify(state)); } 
+        catch(e) { showToast("Memory Full!"); }
+    }
+
+    // --- LANGUAGE SYSTEM ---
+    function setLang(lang) {
+        state.settings.lang = lang;
+        saveState();
+        applyLanguage();
+        
+        // Update button in header
+        const codes = { uz: 'UZ', ru: 'RU', en: 'EN' };
+        document.getElementById('current-lang-code').innerText = codes[lang];
+    }
+
+    function applyLanguage() {
+        const t = i18n[state.settings.lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if(t[key]) el.innerText = t[key];
+        });
+        
+        // Dynamic texts (counts)
+        if(document.getElementById('cat-cam-count')) updateCats();
+        renderShop(); // Re-render to update category pills text
+        renderCart();
+    }
+
+    // --- PROFILE & LOGO ---
+    function openEditProfile() {
+        document.getElementById('inp-store-name').value = state.profile.storeName;
+        document.getElementById('inp-admin-name').value = state.profile.adminName;
+    }
+
+    function saveProfile() {
+        const storeName = document.getElementById('inp-store-name').value.trim();
+        const adminName = document.getElementById('inp-admin-name').value.trim();
+        if(storeName) state.profile.storeName = storeName;
+        if(adminName) state.profile.adminName = adminName;
+        updateProfileUI();
+        saveState(); 
+        closeModal('modal-edit-profile'); 
+        showToast(i18n[state.settings.lang].saved);
+    }
+
+    function updateProfileUI() {
+        document.getElementById('profile-store-name').innerText = state.profile.storeName;
+        document.getElementById('profile-admin-name').innerText = state.profile.adminName;
+        document.getElementById('header-brand').innerText = state.profile.storeName;
+        document.getElementById('header-admin').innerText = state.profile.adminName;
+    }
+
+    function updateLogos() {
+        const logoSrc = state.customLogo || DEFAULT_LOGO;
+        document.getElementById('header-logo').src = logoSrc;
+    }
+
+    function handleLogoUpload(event) {
+        const file = event.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const maxSize = 500; const scale = maxSize / img.width;
+                canvas.width = maxSize; canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                tempLogoImg = canvas.toDataURL('image/png', 0.8);
+                document.getElementById('logo-preview').src = tempLogoImg;
+                document.getElementById('logo-preview-container').classList.remove('hidden');
+                document.getElementById('logo-upload-placeholder').classList.add('hidden');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function removeLogo(e) {
+        e.preventDefault(); e.stopPropagation(); tempLogoImg = null;
+        document.getElementById('logo-file-btn').value = '';
+        document.getElementById('logo-preview-container').classList.add('hidden');
+        document.getElementById('logo-upload-placeholder').classList.remove('hidden');
+    }
+
+    function saveLogo() {
+        state.customLogo = tempLogoImg; saveState(); updateLogos();
+        closeModal('modal-logo'); showToast(i18n[state.settings.lang].saved);
+    }
+
+    // --- NAVIGATION ---
+    function enterApp() { 
+        document.getElementById('splash-screen').classList.add('hidden-splash'); 
+        init(); // Apply saved settings immediately
+    }
+
+    function navigate(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + page).classList.add('active');
+        
+        // Nav Buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            const isActive = btn.dataset.page === page;
+            btn.classList.toggle('text-primary', isActive);
+            btn.classList.toggle('dark:text-red-500', isActive);
+            btn.classList.toggle('border-primary', isActive);
+            btn.classList.toggle('dark:border-red-500', isActive);
+            btn.classList.toggle('text-gray-400', !isActive);
+            btn.classList.toggle('border-transparent', !isActive);
+        });
+
+        if(page === 'shop') renderShop();
+        if(page === 'bag') renderCart();
+        if(page === 'explore') updateCats();
+    }
+
+    // --- IMAGE UPLOAD (COMPRESSED) ---
+    function handleImageUpload(event) {
+        const file = event.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const maxWidth = 800; const scale = maxWidth / img.width;
+                canvas.width = maxWidth; canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                tempProductImg = canvas.toDataURL('image/jpeg', 0.7);
+                document.getElementById('img-preview').src = tempProductImg;
+                document.getElementById('img-preview-container').classList.remove('hidden');
+                document.getElementById('img-upload-placeholder').classList.add('hidden');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function removeProductImage(e) {
+        e.preventDefault(); e.stopPropagation(); tempProductImg = null;
+        document.getElementById('real-file-btn').value = '';
+        document.getElementById('img-preview-container').classList.add('hidden');
+        document.getElementById('img-upload-placeholder').classList.remove('hidden');
+    }
+
+    // --- SHOP & CATALOG ---
+    function renderShop() {
+        const grid = document.getElementById('catalog-grid'); 
+        let items = state.products;
+        
+        if(state.currentFilter !== 'ALL') {
+            items = items.filter(p => p.cat === state.currentFilter);
+        }
+        
+        // Update Title based on filter
+        const t = i18n[state.settings.lang];
+        let titleText = t.shop_title;
+        if(state.currentFilter === 'CAM') titleText = t.cat_cam;
+        else if(state.currentFilter === 'DVR') titleText = t.cat_dvr;
+        else if(state.currentFilter === 'ACC') titleText = t.cat_acc;
+        
+        document.getElementById('shop-title').innerText = titleText;
+
+        // Category Pills Active State
+        document.querySelectorAll('.cat-pill').forEach(btn => {
+            if(btn.dataset.filter === state.currentFilter) {
+                btn.className = "cat-pill px-4 py-2 rounded-full bg-primary text-white text-sm font-semibold whitespace-nowrap";
+            } else {
+                btn.className = "cat-pill px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap";
+            }
+        });
+
+        grid.innerHTML = items.map(p => `
+            <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 card-hover cursor-pointer" onclick="viewProduct(${p.id})">
+                <div class="aspect-square bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                    <img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/e2e8f0/475569?text=No+Image'">
+                </div>
+                <div class="p-4">
+                    <p class="text-[10px] font-bold text-primary dark:text-red-400 uppercase tracking-widest">${p.cat}</p>
+                    <h4 class="font-headline font-bold mt-1 truncate dark:text-white">${p.name}</h4>
+                    <p class="font-headline font-bold mt-2 text-primary dark:text-red-400">${formatMoney(p.price)}</p>
+                </div>
+            </div>`).join('');
+    }
+
+    function filterByCategory(cat) { 
+        state.currentFilter = cat; 
+        navigate('shop'); 
+    }
+
+    function updateCats() {
+        const t = i18n[state.settings.lang];
+        document.getElementById('cat-cam-count').innerText = state.products.filter(p => p.cat === 'CAM').length + ' ' + t.cam_count;
+        document.getElementById('cat-dvr-count').innerText = state.products.filter(p => p.cat === 'DVR').length + ' ' + t.rec_count;
+        document.getElementById('cat-acc-count').innerText = state.products.filter(p => p.cat === 'ACC').length + ' ' + t.acc_count;
+    }
+
+    // --- CART ---
+    function renderCart() {
+        const list = document.getElementById('cart-list'); 
+        const empty = document.getElementById('cart-empty');
+        const t = i18n[state.settings.lang];
+        
+        if(state.cart.length === 0) { 
+            list.innerHTML = ''; 
+            empty.classList.remove('hidden'); 
+            return; 
+        }
+        
+        empty.classList.add('hidden'); 
+        let total = 0;
+        
+        list.innerHTML = state.cart.map(item => {
+            total += item.price * item.qty;
+            return `<div class="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex gap-4 items-center">
+                <img src="${item.img}" class="w-20 h-20 rounded-xl object-cover" onerror="this.src='https://placehold.co/100x100/e2e8f0/475569?text=?'">
+                <div class="flex-1">
+                    <h4 class="font-bold truncate dark:text-white text-sm">${item.name}</h4>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">${formatMoney(item.price)}</p>
+                    <div class="flex items-center gap-3 mt-2 bg-gray-100 dark:bg-gray-700 rounded-lg w-fit">
+                        <button onclick="changeQty(${item.id}, -1)" class="w-8 h-8 flex items-center justify-center font-bold text-gray-500 hover:text-red-500">-</button>
+                        <span class="font-bold w-4 text-center dark:text-white">${item.qty}</span>
+                        <button onclick="changeQty(${item.id}, 1)" class="w-8 h-8 flex items-center justify-center font-bold text-gray-500 hover:text-blue-500">+</button>
+                    </div>
+                </div>
+                <button onclick="removeFromCart(${item.id})" class="self-start p-1 text-gray-300 hover:text-red-500 transition"><span class="material-symbols-outlined">delete</span></button>
+            </div>`;
+        }).join('');
+        
+        list.innerHTML += `<div class="fixed bottom-20 left-0 right-0 p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 z-40"><div class="max-w-lg mx-auto">
+            <div class="flex justify-between mb-3">
+                <span class="text-gray-500 font-medium" data-i18n="total">${t.total}</span>
+                <span class="font-headline text-xl font-bold dark:text-white">${formatMoney(total)}</span>
+            </div>
+            <a href="#" onclick="sendToTelegram(); return false;" class="w-full bg-[#0088cc] text-white font-bold py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform block text-center">
+                <span class="material-symbols-outlined">send</span> <span data-i18n="buy_btn">${t.buy_btn}</span>
+            </a>
+            <button onclick="clearCart()" class="w-full text-center text-sm text-gray-400 mt-2 underline" data-i18n="clear_bag">${t.clear_bag}</button>
+        </div></div>`;
+    }
+
+    function updateBadges() {
+        const count = state.cart.reduce((a, b) => a + b.qty, 0);
+        ['header-badge', 'nav-badge'].forEach(id => {
+            const el = document.getElementById(id);
+            if(count > 0) { 
+                el.classList.remove('hidden'); 
+                el.classList.add('flex'); 
+                el.innerText = count; 
+            } else { 
+                el.classList.add('hidden'); 
+            }
+        });
+    }
+
+    // --- PRODUCT LOGIC ---
+    function viewProduct(id) {
+        state.currentViewProduct = state.products.find(p => p.id === id); 
+        const p = state.currentViewProduct;
+        if(!p) return;
+        
+        document.getElementById('modal-product-title').innerText = p.name; 
+        document.getElementById('modal-product-name').innerText = p.name;
+        document.getElementById('modal-product-img').src = p.img; 
+        document.getElementById('modal-product-cat').innerText = p.cat;
+        document.getElementById('modal-product-price').innerText = formatMoney(p.price); 
+        document.getElementById('modal-product-desc').innerText = p.desc || "No description";
+        openModal('modal-product');
+    }
+
+    function addNewProduct() {
+        const name = document.getElementById('inp-name').value.trim(); 
+        const price = parseInt(document.getElementById('inp-price').value); 
+        const cat = document.getElementById('inp-cat').value;
+        const desc = document.getElementById('inp-desc').value.trim();
+        
+        if(!name || !price) return showToast("Enter name and price!");
+        
+        let img = tempProductImg || `https://placehold.co/600x600/e2e8f0/475569?text=${name.split(' ')[0]}`;
+        
+        state.products.push({ 
+            id: Date.now(), 
+            name, 
+            price, 
+            cat, 
+            img, 
+            desc: desc || "No specifications added." 
+        });
+        
+        saveState(); 
+        renderShop(); 
+        updateCats(); 
+        closeModal('modal-add-product');
+        
+        // Reset form
+        document.getElementById('inp-name').value = ''; 
+        document.getElementById('inp-price').value = ''; 
+        document.getElementById('inp-desc').value = '';
+        removeProductImage(new Event('click')); 
+        tempProductImg = null;
+        
+        showToast(i18n[state.settings.lang].saved);
+    }
+
+    function addToCart() {
+        const p = state.currentViewProduct; 
+        if(!p) return;
+        const existing = state.cart.find(i => i.id === p.id);
+        if(existing) existing.qty++; 
+        else state.cart.push({ ...p, qty: 1 });
+        
+        saveState(); 
+        updateBadges(); 
+        closeModal('modal-product'); 
+        showToast(i18n[state.settings.lang].added);
+    }
+
+    function changeQty(id, val) {
+        const item = state.cart.find(i => i.id === id);
+        if(item) { 
+            item.qty += val; 
+            if(item.qty <= 0) state.cart = state.cart.filter(i => i.id !== id); 
+        }
+        saveState(); 
+        updateBadges(); 
+        renderCart();
+    }
+    
+    function removeFromCart(id) { 
+        state.cart = state.cart.filter(i => i.id !== id); 
+        saveState(); 
+        updateBadges(); 
+        renderCart(); 
+    }
+    
+    function clearCart() { 
+        state.cart = []; 
+        saveState(); 
+        updateBadges(); 
+        renderCart(); 
+        showToast(i18n[state.settings.lang].cleared); 
+    }
+
+    function sendToTelegram() {
+        if(state.cart.length === 0) return;
+        const t = i18n[state.settings.lang];
+        let message = `🛒 *New Order (${state.settings.lang.toUpperCase()})*\n\n`; 
+        let total = 0;
+        
+        state.cart.forEach((item, index) => { 
+            const sum = item.price * item.qty; 
+            total += sum; 
+            message += `${index + 1}. ${item.name}\n   Qty: ${item.qty}\n   Price: ${formatMoney(sum)}\n\n`; 
+        });
+        message += `💰 *Total: ${formatMoney(total)}*`;
+        
+        window.open(`https://t.me/${OWNER_USERNAME}?text=${encodeURIComponent(message)}`, '_blank');
+        state.cart = []; 
+        saveState(); 
+        updateBadges(); 
+        renderCart();
+    }
+
+    // --- UTILS ---
+    function formatMoney(num) { 
+        if(state.settings.currency === 'USD') return '$' + (num / 11300).toFixed(2); 
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm"; 
+    }
+
+    function toggleDarkMode() {
+        state.settings.darkMode = !state.settings.darkMode;
+        document.documentElement.classList.toggle('dark', state.settings.darkMode); 
+        document.body.classList.toggle('dark-mode', state.settings.darkMode);
+        
+        const circle = document.getElementById('dark-circle'); 
+        const btn = document.getElementById('btn-dark');
+        if(state.settings.darkMode) { 
+            circle.style.left = '28px'; 
+            btn.style.backgroundColor = '#C8161D'; // Red in dark mode
+        }
+        else { 
+            circle.style.left = '4px'; 
+            btn.style.backgroundColor = '#D1D5DB'; 
+        }
+        saveState();
+    }
+
+    function changeCurrency(curr) { 
+        state.settings.currency = curr; 
+        saveState(); 
+        renderShop(); 
+        if(document.getElementById('page-bag').classList.contains('active')) renderCart(); 
+    }
+    
+    function clearAllData() { 
+        const t = i18n[state.settings.lang];
+        if(confirm(t.confirm_del)) { 
+            localStorage.removeItem('hik_state'); 
+            location.reload(); 
+        } 
+    }
+
+    // --- MODALS & INIT ---
+    function openModal(id) { 
+        if(id === 'modal-edit-profile') openEditProfile(); 
+        document.getElementById(id).classList.add('show'); 
+        document.body.style.overflow = 'hidden'; 
+    }
+    
+    function closeModal(id) { 
+        document.getElementById(id).classList.remove('show'); 
+        document.body.style.overflow = ''; 
+    }
+
+    function showToast(msg) { 
+        const t = document.getElementById('toast'); 
+        document.getElementById('toast-msg').innerText = msg; 
+        t.classList.add('show'); 
+        setTimeout(() => t.classList.remove('show'), 2500); 
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(m => { 
+        m.addEventListener('click', (e) => { if(e.target === m) closeModal(m.id); }); 
+    });
+
+    function init() {
+        applyLanguage();
+        
+        const codes = { uz: 'UZ', ru: 'RU', en: 'EN' };
+        document.getElementById('current-lang-code').innerText = codes[state.settings.lang];
+
+        if(state.settings.darkMode) {
+            document.documentElement.classList.add('dark'); 
+            document.body.classList.add('dark-mode');
+            document.getElementById('dark-circle').style.left = '28px'; 
+            document.getElementById('btn-dark').style.backgroundColor = '#C8161D';
+        }
+        
+        document.getElementById('sel-curr').value = state.settings.currency;
+        updateProfileUI();
+        updateLogos(); 
+        renderShop(); 
+        updateCats(); 
+        updateBadges();
+    }
+
+    // Only run init if not waiting for splash screen (though we call enterApp manually)
+    init();
+</script>
+<!-- Made for Hikvision Catalog -->
+</body>
+</html>
